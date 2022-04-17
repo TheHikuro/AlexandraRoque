@@ -13,6 +13,6 @@ export const Input = ({name, onChange, type}: IInputProps) => {
         onChange(e);
     }
     return (
-        <input type={type} name={name} placeholder={name} onChange={handleChange} value={value} className='p-3 bg-slate-200 m-2 text-white rounded-md hover:bg-slate-700 focus:outline-none focus:shadow-outline' />
+        <input type={type} name={name} placeholder={name} onChange={handleChange} value={value} className='p-3 bg-slate-200 m-2 text-white rounded-md hover:bg-slate-300 focus:outline-none focus:shadow-outline w-full' />
     )
 }
