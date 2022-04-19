@@ -28,6 +28,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
     const [loading, setLoading] = React.useState(false);
     const [initialLoading, setInitialLoading] = React.useState(true);
     const [isConnected, setIsConnected] = React.useState(false);
+    const [error, setError] = React.useState('');
 
     React.useEffect(() => 
         onAuthStateChanged(auth, (user) => {
