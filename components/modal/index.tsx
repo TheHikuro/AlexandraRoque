@@ -1,56 +1,73 @@
-import { IModalProps } from "../../redux/reducers/modal/type";
-import React from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import { ModalActionType } from "../../redux/reducers/modal/action";
-import { RootState } from "../../redux/store";
+import React, { createContext, useContext, useCallback, useState } from "react";
+import { XIcon } from "@heroicons/react/outline";
 
-export const Modal = () => {
-    const dispatch = useDispatch()
-    const {
-        title,
-        body,
-        open,
-        yesOrNoModal,
-        yesAction,
-        noAction,
-    } = useSelector((state: RootState) => state.modal)
+const ModalContext = createContext({
+    openModal: () => { },
+    UpdateModalTitle: (title: string) => { title },
+    UpdateModalContent: (content: JSX.Element) => { content },
+    closeModal: () => { },
+    closeModalWithoutPropagation: {}
+});
 
-    const handleClose = () => {
-        dispatch({
-            type: ModalActionType.CLOSE_MODAL
-        })
-    }
-    // make modal with tailwind and heroicon
+export const ModalProvider = ({ children }: any) => {
+    const [modalOpened, setModalOpened] = useState(false);
+    const [modalTitle, setModalTitle] = useState("");
+    const [modalContent, setModalContent] = useState(<></> as JSX.Element);
+
+    const UpdateModalTitle = useCallback((newModalTitle: any) => {
+        setModalTitle(newModalTitle);
+    }, [])
+
+    const UpdateModalContent = useCallback((newModalContent: JSX.Element) => {
+        setModalContent(newModalContent.props.children);
+    }, [])
+
+    const openModal = useCallback(() => {
+        setModalOpened(true);
+    }, [])
+
+    const closeModal = useCallback(() => {
+        setModalOpened(false);
+    }, [])
+
+    const closeModalWithoutPropagation = useCallback((event: any) => {
+        event.stopPropagation();
+        setModalOpened(false);
+    }, [])
+
     return (
-        <div className={`fixed inset-0 z-50 ${open ? 'opacity-100' : 'opacity-0'}`}>
-            <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
-            <div className="absolute inset-0 flex flex-col justify-center items-center">
-                <div className="bg-white rounded-md shadow-xl p-4">
-                    <div className="flex justify-between items-center">
-                        <h1 className="text-2xl font-bold">{title}</h1>
-                        <button onClick={handleClose} className="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                            <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div className="mt-4">
-                        {body}
-                    </div>
-                    <div className="flex justify-end mt-4">
-                        <button onClick={handleClose} className="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                            <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                            </svg>
-                        </button>
-                        <button onClick={yesAction} className="ml-4 text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
-                            <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+        <ModalContext.Provider
+            value={{
+                openModal: openModal,
+                closeModal: closeModal,
+                closeModalWithoutPropagation: closeModalWithoutPropagation,
+                UpdateModalTitle: UpdateModalTitle,
+                UpdateModalContent: UpdateModalContent,
+            }}
+        >
+            <div>
+                {modalOpened && (
+                    <>
+                        <div className={`fixed inset-0 z-50 overflow-auto ${modalOpened ? 'opacity-100' : 'opacity-0'}`}>
+                            <div className='absolute inset-0 bg-gray-900 opacity-50' onClick={closeModal}></div>
+                            <div className={`absolute bg-white z-50 w-92 h-92 inset-1/4 rounded-md shadow-xl`}>
+                                <div className='absolute inset-0 flex flex-col overflow-scroll'>
+                                    <div className="px-6 mt-3 flex items-center justify-between">
+                                        <span className="uppercase tracking-wide text-gray-700 font-bold text-xl">{modalTitle}</span>
+                                        <XIcon className="cursor-pointer float-right h-7 w-7 font-bold hover:text-red-500" onClick={closeModal} />
+                                    </div>
+                                    <div className="p-6">
+                                        {modalContent}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
-        </div>
+            {children}
+        </ModalContext.Provider>
     )
 }
+
+export const useModalContext = () => useContext(ModalContext);
