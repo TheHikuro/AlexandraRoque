@@ -8,14 +8,19 @@ export default function Container(props: any) {
     const [displayNav, setDisplayNav] = React.useState(true)
 
     React.useEffect(() => {
-        if (isConnected === "false") {
-            setDisplayNav(false)
-        } else if (router.pathname === '/login') {
-            setDisplayNav(false)
-        } else if (router.pathname === '/admin') {
-            setDisplayNav(false)
-        } else {
-            setDisplayNav(true)
+        isConnected === "true" ? setDisplayNav(true) : setDisplayNav(false)
+        switch (router.pathname) {
+            case "/login":
+                setDisplayNav(false)
+            case "/admin/quizz":
+                setDisplayNav(true)
+            case "/admin/questions":
+                setDisplayNav(true)
+            case "/admin/pictures":
+                setDisplayNav(true)
+            default:
+                setDisplayNav(false)
+                break
         }
     }, [isConnected, router.pathname])
     

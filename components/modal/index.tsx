@@ -54,7 +54,7 @@ export const ModalProvider = ({ children }: any) => {
                                 <div className='absolute inset-0 flex flex-col overflow-scroll'>
                                     <div className="px-6 mt-3 flex items-center justify-between">
                                         <span className="uppercase tracking-wide text-gray-700 font-bold text-xl">{modalTitle}</span>
-                                        <XIcon className="cursor-pointer float-right h-7 w-7 font-bold hover:text-red-500" onClick={closeModal} />
+                                        <XIcon className="cursor-pointer float-right h-7 w-7 -mr-3 font-bold hover:text-red-500" onClick={closeModal} />
                                     </div>
                                     <div className="p-6">
                                         {modalContent}
