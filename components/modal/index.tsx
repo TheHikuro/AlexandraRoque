@@ -1,38 +1,53 @@
-import React, { createContext, useContext, useCallback, useState } from "react";
+import React, { createContext, useContext, useCallback, useState, useReducer } from "react";
 import { XIcon } from "@heroicons/react/outline";
+import { Button } from "../button";
+import { reducer, initialState, ActionType } from "./reducer/Reducer";
 
 const ModalContext = createContext({
     openModal: () => { },
-    UpdateModalTitle: (title: string) => { title },
-    UpdateModalContent: (content: JSX.Element) => { content },
+    updateModalTitle: (title: string) => { title },
+    updateModalContent: (content: JSX.Element) => { content },
     closeModal: () => { },
-    closeModalWithoutPropagation: {}
+    closeModalWithoutPropagation: {},
+    yesNoModal: () => {},
+    yesActionModal: (action: () => void) => { action() },
+    noActionModal: (action: () => void) => { action() },
 });
 
 export const ModalProvider = ({ children }: any) => {
-    const [modalOpened, setModalOpened] = useState(false);
-    const [modalTitle, setModalTitle] = useState("");
-    const [modalContent, setModalContent] = useState(<></> as JSX.Element);
+    const [store, dispatch] = useReducer(reducer, initialState);
 
-    const UpdateModalTitle = useCallback((newModalTitle: any) => {
-        setModalTitle(newModalTitle);
+    const updateModalTitle = useCallback((newModalTitle: any) => {
+        dispatch({ type: ActionType.UpdateTitle, title: newModalTitle });
     }, [])
 
-    const UpdateModalContent = useCallback((newModalContent: JSX.Element) => {
-        setModalContent(newModalContent.props.children);
+    const updateModalContent = useCallback((newModalContent: JSX.Element) => {
+        dispatch({ type: ActionType.UpdateContent, content: newModalContent.props.children });
     }, [])
 
     const openModal = useCallback(() => {
-        setModalOpened(true);
+        dispatch({ type: ActionType.Open });
     }, [])
 
     const closeModal = useCallback(() => {
-        setModalOpened(false);
+        dispatch({ type: ActionType.Close });
     }, [])
 
     const closeModalWithoutPropagation = useCallback((event: any) => {
         event.stopPropagation();
-        setModalOpened(false);
+        dispatch({ type: ActionType.Close });
+    }, [])
+
+    const yesNoModal = useCallback(() => {
+        dispatch({ type: ActionType.YesNo });
+    }, [])
+
+    const yesActionModal = useCallback((action: () => void) => {
+        dispatch({ type: ActionType.YesAction, action });
+    }, [])
+
+    const noActionModal = useCallback((action: () => void) => {
+        dispatch({ type: ActionType.NoAction, action });
     }, [])
 
     return (
@@ -41,24 +56,33 @@ export const ModalProvider = ({ children }: any) => {
                 openModal: openModal,
                 closeModal: closeModal,
                 closeModalWithoutPropagation: closeModalWithoutPropagation,
-                UpdateModalTitle: UpdateModalTitle,
-                UpdateModalContent: UpdateModalContent,
+                updateModalTitle: updateModalTitle,
+                updateModalContent: updateModalContent,
+                yesNoModal: yesNoModal,
+                yesActionModal: yesActionModal,
+                noActionModal: noActionModal,
             }}
         >
             <div>
-                {modalOpened && (
+                {store.open && (
                     <>
-                        <div className={`fixed inset-0 z-50 overflow-auto ${modalOpened ? 'opacity-100' : 'opacity-0'}`}>
+                        <div className={`fixed inset-0 z-50 overflow-auto ${store.open ? 'opacity-100' : 'opacity-0'}`}>
                             <div className='absolute inset-0 bg-gray-900 opacity-50' onClick={closeModal}></div>
                             <div className={`absolute bg-white z-50 w-92 h-92 inset-1/4 rounded-md shadow-xl`}>
                                 <div className='absolute inset-0 flex flex-col overflow-scroll'>
                                     <div className="px-6 mt-3 flex items-center justify-between">
-                                        <span className="uppercase tracking-wide text-gray-700 font-bold text-xl">{modalTitle}</span>
+                                        <span className="uppercase tracking-wide text-gray-700 font-bold text-xl">{store.title}</span>
                                         <XIcon className="cursor-pointer float-right h-7 w-7 -mr-3 font-bold hover:text-red-500" onClick={closeModal} />
                                     </div>
                                     <div className="p-6">
-                                        {modalContent}
+                                        {store.content}
                                     </div>
+                                    {store.yesNoModalState && (
+                                        <div className="mt-auto mb-6 ml-auto mr-6">
+                                            <Button name="Yes" onClick={store.yesAction} custom='mr-3 w-32' />
+                                            <Button name="No" onClick={store.noAction} custom='w-32' />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

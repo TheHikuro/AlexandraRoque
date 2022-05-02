@@ -5,17 +5,24 @@ import { useModalContext } from "../../components/modal";
 import { Table } from "../../components/table";
 
 const QuizzContainer = () => {
-    const { openModal, UpdateModalTitle, UpdateModalContent } = useModalContext();
+    const { openModal, updateModalTitle, updateModalContent, yesNoModal } = useModalContext();
 
-    const handleEditModalOpen = (data: any) => {
-        console.log(data.row.name);
-        UpdateModalTitle("Edit " + data.row.id);
-        UpdateModalContent(
+    const handleInfoModalOpen = (data: any) => {
+        updateModalTitle("Edit " + data.row.id);
+        updateModalContent(
             <div className="flex bg-slate-500 w-full h-full flex-col">
-                <div>{data.row.name}</div>
-                <div>{data.row.answer}</div>
+                <div> <span>Name:</span> {data.row.name}</div>
+                <div> <span>Answer:</span> {data.row.answer}</div>
+                <div className="flex items-center"> <span>Display:</span> {data.row.display ? <CheckIcon className="h-5 w-5 text-green-500"/> : <XIcon className="h-5 w-5 text-red-500" /> }</div>
             </div>
         );
+        openModal();
+    }
+
+    const handleDeleteModalOpen = () => {
+        updateModalTitle("Delete");
+        updateModalContent( <>Voulez vous delete ?</> );
+        yesNoModal();
         openModal();
     }
 
@@ -30,9 +37,9 @@ const QuizzContainer = () => {
         {
             headerName: 'Actions', field: 'actions', width: 200, align: 'right', renderCell: (row: any) => row.value === true ?
                 <>
-                    <PencilIcon className="h-5 w-5 hover:text-blue-500 hover:cursor-pointer mr-2" onClick={() => handleEditModalOpen(row)} />
-                    <TrashIcon className="h-5 w-5 hover:text-red-500 hover:cursor-pointer mr-2" />
-                    <DotsCircleHorizontalIcon className="h-5 w-5 hover:text-blue-500 hover:cursor-pointer" />
+                    <PencilIcon className="h-5 w-5 hover:text-blue-500 hover:cursor-pointer mr-2" />
+                    <TrashIcon className="h-5 w-5 hover:text-red-500 hover:cursor-pointer mr-2" onClick={handleDeleteModalOpen} />
+                    <DotsCircleHorizontalIcon className="h-5 w-5 hover:text-blue-500 hover:cursor-pointer" onClick={() => handleInfoModalOpen(row)}/>
                 </> : ''
         },
     ]
