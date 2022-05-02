@@ -1,16 +1,22 @@
-import { Button } from "../../components/button"
-import useAuth from "../../hooks/useAuth";
-
+import Head from "next/head";
+import { useRouter } from "next/router";
+import React from "react";
 
 const Admin = () => {
-    const { logout } = useAuth();
+    const router = useRouter();
+    // not secured yet
+    
+    React.useEffect(() => {
+        router.push('/admin/quizz')
+    }, [router])
+    // if user is not connected with firebase, redirect to login page
+    // if (!useAuth().isConnected) {}
     return (
-        <div>
-            <h1>
-                Admin
-            </h1>
-            <Button name="Logout" onClick={ logout } />
-        </div>
+        <>
+            <Head>
+                <title>Admin - FormAnglais</title>
+            </Head>
+        </>
     )
 }
 

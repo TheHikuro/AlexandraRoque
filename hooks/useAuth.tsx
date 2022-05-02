@@ -7,7 +7,6 @@ import { auth } from "../firebase";
 interface AuthProviderProps {
     children: React.ReactNode;
 }
-
 interface IAuth {
     user: User | null;
     signIn: (email: string, password: string) => Promise<void>;
