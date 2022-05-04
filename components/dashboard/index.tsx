@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
     AcademicCapIcon,
     CameraIcon,
@@ -7,16 +7,24 @@ import { DashboardItem } from "./DashboardItem";
 import Image from "next/image";
 import bg from "../../img/bg-login.jpeg";
 import { Button } from "../button";
-import useAuth from "../../hooks/useAuth";
+import { useRouter } from "next/router";
 
 export const Dashboard = ({ children }: any) => {
 
-    const { logout } = useAuth();
+    const router = useRouter();
+    
+    const logout = () => {
+        localStorage.removeItem("token");
+        router.push("/login");
+    }
 
     React.useEffect(() => {
-        localStorage.getItem('isConnected') === 'true' ? 'true' : logout();
-    }, [logout])
-    
+        const isConnected = localStorage.getItem("token") !== null;
+        if (!isConnected) {
+            router.push("/login");
+        }
+    }), [];
+
     return (
         <div className="w-full h-screen flex flex-col">
             <Image src={bg} alt='bg-admin' layout="fill" className="blur-sm z-0" />

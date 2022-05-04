@@ -3,7 +3,6 @@ import React from "react"
 import { Navbar } from "../navbar"
 
 export default function Container(props: any) {
-    const isConnected = localStorage.getItem("isConnected")
     const router = useRouter()
     const [displayNav, setDisplayNav] = React.useState(true)
 
@@ -25,7 +24,7 @@ export default function Container(props: any) {
                 setDisplayNav(true)
                 break
         }
-    }, [isConnected, router.pathname])
+    }, [ router.pathname])
     
     return(
         <>
