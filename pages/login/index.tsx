@@ -18,7 +18,7 @@ const Login = () => {
     const { register, handleSubmit } = useForm<ILoginForm>();
 
     const onSubmit: SubmitHandler<ILoginForm> = async (data) => {
-        fetch(`/api/users/${data.username}`, {
+        fetch(`/api/login/${data.username}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

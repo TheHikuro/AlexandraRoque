@@ -7,7 +7,9 @@ export const Navbar = () => {
     const listNav = [
         { name: 'Home', href: '/' },
         { name: 'About', href: '/about' },
-        { name: 'Contact', href: '/contact' }
+        { name: 'Prix', href: '/prix' },
+        { name: 'Faux amis', href: '/faux_amis' },
+        { name: 'Contact', href: '/contact', rounded: true },
     ]
     return (
         <>
@@ -23,7 +25,7 @@ export const Navbar = () => {
                     <div className="flex flex-col md:flex-row items-center">
                         {listNav.map((item, index) => (
                             <Link href={item.href} key={index}>
-                                <a className={`${router.pathname === item.href ? 'text-black' : 'text-baseColor-100'} text-lg font-semibold mr-4`}>
+                                <a className={`${router.pathname === item.href ? 'text-black' : !item.rounded ? 'text-baseColor-100' : 'text-white'} text-lg font-semibold mr-4 ${item.rounded ? 'px-6 py-2 rounded-full bg-baseColor-100 text-white' : ''}`}>
                                     {item.name}
                                 </a>
                             </Link>
