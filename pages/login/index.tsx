@@ -25,18 +25,18 @@ const Login = () => {
             },
             body: JSON.stringify(data),
         })
-        .then((res) => {
-            if (res.status === 200) {
-                // login success, store token in localStorage
-                res.json().then((user) => {
-                    localStorage.setItem("token", user.token);
-                })
-                router.push("/admin/quizz");
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+            .then((res) => {
+                if (res.status === 200) {
+                    // login success, store token in localStorage
+                    res.json().then((user) => {
+                        localStorage.setItem("token", user.token);
+                    })
+                    router.push("/admin/quizz");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,11 +46,11 @@ const Login = () => {
 
     return (
         <>
+            <Image src={bg} alt='bg-login' layout="fill" className="blur-sm" />
             <Head>
                 <title>Login</title>
             </Head>
-            <div className="flex flex-col items-center justify-center h-screen">
-                <Image src={bg} alt='bg-login' layout="fill" className="blur-sm" />
+            <div className="flex flex-col items-center justify-center h-screen w-full">
                 <form onSubmit={handleFormSubmit} className="w-full max-w-sm shadow-xl p-5 rounded-md flex justify-center items-center flex-col z-50 bg-white">
                     <h1 className="block uppercase tracking-wide text-gray-700 text-xl font-bold mb-2">Login</h1>
                     <div className="flex flex-wrap -mx-3 mb-6">

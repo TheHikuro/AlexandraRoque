@@ -5,7 +5,7 @@ const uri = process.env.MONGO_URI;
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>
 
-if(!uri) {
+if (!uri) {
     throw new Error('MONGODB_URI is not defined')
 }
 

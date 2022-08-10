@@ -13,7 +13,7 @@ const QuizzContainer = () => {
             <div className="flex bg-slate-500 w-full h-full flex-col">
                 <div> <span>Name:</span> {data.row.name}</div>
                 <div> <span>Answer:</span> {data.row.answer}</div>
-                <div className="flex items-center"> <span>Display:</span> {data.row.display ? <CheckIcon className="h-5 w-5 text-green-500"/> : <XIcon className="h-5 w-5 text-red-500" /> }</div>
+                <div className="flex items-center"> <span>Display:</span> {data.row.display ? <CheckIcon className="h-5 w-5 text-green-500" /> : <XIcon className="h-5 w-5 text-red-500" />}</div>
             </div>
         );
         openModal();
@@ -21,7 +21,7 @@ const QuizzContainer = () => {
 
     const handleDeleteModalOpen = () => {
         updateModalTitle("Delete");
-        updateModalContent( <>Voulez vous delete ?</> );
+        updateModalContent(<>Voulez vous delete ?</>);
         yesNoModal();
         openModal();
     }
@@ -39,7 +39,7 @@ const QuizzContainer = () => {
                 <>
                     <PencilIcon className="h-5 w-5 hover:text-blue-500 hover:cursor-pointer mr-2" />
                     <TrashIcon className="h-5 w-5 hover:text-red-500 hover:cursor-pointer mr-2" onClick={handleDeleteModalOpen} />
-                    <DotsCircleHorizontalIcon className="h-5 w-5 hover:text-blue-500 hover:cursor-pointer" onClick={() => handleInfoModalOpen(row)}/>
+                    <DotsCircleHorizontalIcon className="h-5 w-5 hover:text-blue-500 hover:cursor-pointer" onClick={() => handleInfoModalOpen(row)} />
                 </> : ''
         },
     ]
@@ -52,6 +52,7 @@ const QuizzContainer = () => {
         { id: 6, name: '🇷🇺', display: false, answer: 'Russia', actions: true },
         { id: 7, name: '🇨🇳', display: true, answer: 'China', actions: true },
     ]
+
     return (
         <Dashboard>
             <Table

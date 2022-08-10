@@ -18,7 +18,7 @@ export default async function handler(
   const data = await collection.then(collection =>
     collection.findOne({ username: user })
   );
-  
+
   switch (req.method) {
     case 'POST':
       const { username, password } = req.body;

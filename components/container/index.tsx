@@ -24,14 +24,18 @@ export default function Container(props: any) {
                 setDisplayNav(true)
                 break
         }
-    }, [ router.pathname])
-    
-    return(
+    }, [router.pathname])
+
+    return (
         <>
-            <div className="flex w-full h-full items-center justify-center">
-                {displayNav ? (<Navbar />) : ''}
+            <div className="flex flex-col w-full h-full">
+                <div className="flex w-full items-center justify-center">
+                    {displayNav ? (<Navbar />) : ''}
+                </div>
+                <div className="mt-20 w-full h-full flex">
+                    {props.children}
+                </div>
             </div>
-            {props.children}
         </>
     )
 }
