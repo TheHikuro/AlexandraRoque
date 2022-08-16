@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { Fragment } from 'react'
 import { Button } from '../components/button'
 import { useModalContext } from '../components/modal'
@@ -19,26 +20,29 @@ const Home: NextPage = () => {
     openModal()
   }
   return (
-    <div className='w-full h-sceen'>
+    <div className='w-full h-full'>
       <Head>
         <title>Form Anglais | Alexandra Roque</title>
         <meta name='description' content='Form Anglais Alexandra Roque' />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='h-full w-full bg-gradient-to-b from-red-500 to bg-purple-400 overflow-scroll'>
+      <div className='h-full w-full bg-gradient-to-b from-red-500 to bg-purple-400'>
         <div className='flex justify-center items-center'>
           <div className='flex justify-center p-6 items-start w-5/12 h-1/2'>
-            <div className='flex items-center flex-col'>
-              <div className='bg-indigo-500/60 shadow-xl rounded-full items-baseline flex w-80 h-80 fixed mt-9' />
-              <Image src={alex} width={400} height={300} alt='Alexandra Roque' className='z-10' />
-              <div className='p-2 bg-white rounded-xl shadow-xl w-96 flex justify-center items-center flex-col -mt-6 z-20'>
-                <h2 className='text-4xl font-semibold text-blue-900'>Alexandra Roque</h2>
-                <span className='text-baseColor-100'>Auto-Entrepreneuse</span>
+            <div className='flex items-center flex-col justify-center'>
+              <div className='bg-indigo-500/60 shadow-xl rounded-full items-baseline justify-center flex w-96 h-96 mt-9'>
+                <div className='flex justify-center items-center flex-col'>
+                  <Image src={alex} width={660} height={550} alt='Alexandra Roque' className='z-10' />
+                  <div className='p-2 bg-white rounded-xl shadow-xl w-96 flex justify-center items-center flex-col -mt-6 z-20'>
+                    <h2 className='text-4xl font-semibold text-blue-900'>Alexandra Roque</h2>
+                    <span className='text-baseColor-100'>Auto-Entrepreneuse</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div className='w-7/12 h-1/2 p-10'>
-            <TextContainer title='Qui suis-je ?' content={
+            <TextContainer title='Qui suis-je ?' large content={
               <Fragment>
                 <div className='flex text-justify justify-center w-full h-full flex-col'>
                   <div>
@@ -67,8 +71,32 @@ const Home: NextPage = () => {
             } />
           </div>
         </div>
-        <div className='w-full h-fit'>
-
+        <div className='w-full p-5 flex'>
+          <div className='w-1/2 h-full'>
+            <TextContainer title='Mon livre' large={false} content={
+              <Fragment>
+                <div className='flex justify-center items-center flex-col w-full h-full'>
+                  <span className='text-2xl'>
+                    Les 300 principaux faux amis anglais à connaître
+                  </span>
+                  <span className='font-bold text-baseColor-100 text-2xl'>Mots en context et exercices corrigés</span>
+                  <Link href='https://livre.fnac.com/a10160018/Alexandra-Roque-Les-300-principaux-faux-amis-anglais-a-connaitre-Mots-en-contexte-et-exercices-corriges?Origin=fnac_google'>
+                    <a className='w-32 mt-8 flex justify-center items-center hover:cursor-pointer rounded-full px-2 py-1 h-10 bg-baseColor-100 text-white font-bold' target='_blank'>
+                      Voir le livre
+                    </a>
+                  </Link>
+                </div>
+              </Fragment>
+            } />
+          </div>
+          <div className='w-1/2 h-56 flex justify-center items-center px-20'>
+            <div className='w-full h-20 rounded-full bg-white shadow-lg text-center flex items-center justify-center text-indigo-800 text-xl font-bold flex-col'>
+              <span className='mb-2'>
+                Connais-tu les drapeaux des pays anglophones ?
+              </span>
+              <div className='-mb-12 hover:cursor-pointer p-2 bg-baseColor-100 shadow-md rounded-full text-white'>Faire le quizz</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

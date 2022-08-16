@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
 import React from "react"
+import { whenPatternMatches } from "../../lib/helpers"
 import { Navbar } from "../navbar"
 
 export default function Container(props: any) {
@@ -7,32 +8,22 @@ export default function Container(props: any) {
     const [displayNav, setDisplayNav] = React.useState(true)
 
     React.useEffect(() => {
-        switch (router.pathname) {
-            case "/login":
-                setDisplayNav(false)
-                break;
-            case "/admin/quizz":
-                setDisplayNav(false)
-                break
-            case "/admin/questions":
-                setDisplayNav(false)
-                break
-            case "/admin/pictures":
-                setDisplayNav(false)
-                break
-            default:
-                setDisplayNav(true)
-                break
-        }
+        whenPatternMatches(router.pathname, [
+            [/^\/admin\/.*$/, () => setDisplayNav(false)],
+            [/^\/login\/?$/, () => setDisplayNav(false)],
+            [/^\/register\/?$/, () => setDisplayNav(false)],
+        ])
     }, [router.pathname])
 
     return (
         <>
             <div className="flex flex-col w-full h-screen">
-                <div className="flex w-full h-20 items-center justify-center">
-                    {displayNav ? (<Navbar />) : ''}
-                </div>
-                <div className="w-full h-full flex">
+                {displayNav ? (
+                    <div className="flex w-full h-20 items-center justify-center">
+                        <Navbar />
+                    </div>
+                ) : null}
+                <div className="w-full h-full flex overflow-scroll">
                     {props.children}
                 </div>
             </div>
