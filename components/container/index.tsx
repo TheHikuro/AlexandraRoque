@@ -28,11 +28,11 @@ export default function Container(props: any) {
 
     return (
         <>
-            <div className="flex flex-col w-full h-full">
-                <div className="flex w-full items-center justify-center">
+            <div className="flex flex-col w-full h-screen">
+                <div className="flex w-full h-20 items-center justify-center">
                     {displayNav ? (<Navbar />) : ''}
                 </div>
-                <div className="mt-20 w-full h-full flex">
+                <div className="w-full h-full flex">
                     {props.children}
                 </div>
             </div>

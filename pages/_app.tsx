@@ -8,9 +8,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ModalProvider>
       <Container>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Component {...pageProps} />
       </Container>
     </ModalProvider>
   )
