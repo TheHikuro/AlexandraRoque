@@ -14,7 +14,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <div className="bg-white z-50 h-fit w-full items-center flex justify-center fixed shadow-lg">
+            <div className="bg-white z-40 h-fit w-full items-center flex justify-center fixed shadow-lg">
                 <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between fixed">
                     <div className="flex flex-col md:flex-row items-center">
                         <Link href='/'>
