@@ -8,5 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         { name: "Loan CLERIS", comment: 'John Doe is a very good developer', company: 'Orano' },
         { name: "Ewan Lemee", comment: 'John Doe is a very good developer', company: 'Orano' },
         { name: "Mael Jamin", comment: 'John Doe is a very good developer', company: 'Orano' },
+        { name: "Harvey Specter", comment: 'John Doe is a very good developer', company: 'Pearson Specter' },
+        { name: "Harvey Specter", comment: 'John Doe is a very good developer', company: 'Pearson Specter' },
     ]);
 }

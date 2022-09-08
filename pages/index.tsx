@@ -3,12 +3,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
-import { Button } from '../components/button'
 import { useModalContext } from '../components/modal'
-import { Testimonials } from '../components/testimonials'
+import { Carrousel, Testimonials, TestimonialsProps } from '../components/testimonials'
 import { TextContainer } from '../components/textContainer'
 import alex from '../img/alex.png'
-import usa from '../img/flag_usa.jpg'
 
 type Data = {
     name: string
@@ -28,17 +26,9 @@ const Home: NextPage = (props: any) => {
         )
         openModal()
     }
-    const handleModalQuizz = () => {
-        updateModalTitle('Mon Quizz')
-        updateModalContent(
-            <Fragment>
-                <span></span>
-            </Fragment>
-        )
-        openModal()
-    }
+
     return (
-        <div className='w-full h-full bg-gradient-to-b from-red-500 to bg-purple-400'>
+        <div className='w-screen h-full bg-gradient-to-b from-red-500 to bg-purple-400'>
             <Head>
                 <title>Form Anglais | Alexandra Roque</title>
                 <meta name='description' content='Form Anglais Alexandra Roque' />
@@ -48,7 +38,7 @@ const Home: NextPage = (props: any) => {
                 <div className='flex justify-center items-center'>
                     <div className='flex justify-center p-6 items-start w-5/12 h-1/2'>
                         <div className='flex items-center flex-col justify-center'>
-                            <div className='bg-indigo-500/60 shadow-xl rounded-full items-baseline justify-center flex w-96 h-96 mt-9'>
+                            <div className='bg-indigo-500/60 shadow-xl rounded-full items-baseline justify-center flex w-96 h-96'>
                                 <div className='flex justify-center items-center flex-col mt-10'>
                                     <Image src={alex} width={700} height={560} alt='Alexandra Roque' className='z-10' />
                                     <div className='p-2 bg-white rounded-xl shadow-xl w-96 flex justify-center items-center flex-col -mt-6 z-20'>
@@ -117,13 +107,17 @@ const Home: NextPage = (props: any) => {
                             <span className='mb-2'>
                                 Connais-tu les drapeaux des pays anglophones ?
                             </span>
-                            <div onClick={handleModalQuizz} className='-mb-12 hover:cursor-pointer p-2 bg-baseColor-100 shadow-md rounded-full text-white'>Faire le quizz</div>
+                            <Link href={'/quizz'}>
+                                <a className='-mb-12 hover:cursor-pointer p-2 bg-baseColor-100 shadow-md rounded-full text-white'>
+                                    Faire le quizz
+                                </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='h-64 bg-white flex items-center justify-center'>
-                <Testimonials data={data} />
+            <div className='h-80 w-screen px-5 bg-white flex items-center justify-center overflow-x-auto'>
+                <Carrousel data={data} />
             </div>
             <div className='h-20 bg-gradient-to-b from-purple-400 to bg-purple-300' />
         </div>
